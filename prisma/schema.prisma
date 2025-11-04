@@ -1,0 +1,34 @@
+// Prisma schema for Postgres primary; can fallback to file storage in API if DB not available.
+// Set DATABASE_URL in .env, e.g. postgres://user:password@localhost:5432/devflow
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserSetting {
+  id                 Int      @id @default(1)
+  fullName           String
+  email              String
+  emailNotifications Boolean  @default(true)
+  slackNotifications Boolean  @default(false)
+  twoFactor          Boolean  @default(false)
+  avatarUrl          String   @default("")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Report {
+  id            String   @id @default(cuid())
+  name          String
+  type          String
+  frequency     String
+  recipients    Int      @default(0)
+  lastGenerated String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
