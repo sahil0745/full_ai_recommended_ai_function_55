@@ -1,17 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/components/theme-provider'
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+import { AIChatbot } from '@/components/ai-chatbot'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'TravelGenie - AI-Powered Travel Platform',
+  description: 'Plan, Book, and Explore with AI-powered travel recommendations. Hotels, Restaurants, Cabs, and complete trip planning in one place.',
+  keywords: ['travel', 'AI', 'booking', 'hotels', 'restaurants', 'trip planner'],
 }
 
 export default function RootLayout({
@@ -24,6 +21,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <AIChatbot />
           <Toaster />
           <Analytics />
         </ThemeProvider>
