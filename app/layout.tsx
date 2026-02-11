@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/components/theme-provider'
+import { AIChatbot } from '@/components/ai-chatbot'
 
 export const metadata: Metadata = {
   title: 'TravelGenie - AI-Powered Travel Platform',
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <AIChatbot />
           <Toaster />
           <Analytics />
         </ThemeProvider>
