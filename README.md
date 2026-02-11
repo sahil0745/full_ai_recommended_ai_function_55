@@ -3,7 +3,7 @@
 <div align="center">
 
 ![TravelGenie](https://img.shields.io/badge/TravelGenie-v1.0.0-blue.svg)
-![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black.svg)
+![Next.js](https://img.shields.io/badge/Next.js-15.5.12-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-green.svg)
@@ -13,9 +13,53 @@
 
 Plan, Book, and Explore with AI - Hotels, Restaurants, Cabs, and complete trip planning in one place.
 
-[Features](#features) • [Tech Stack](#tech-stack) • [Getting Started](#getting-started) • [API Documentation](#api-documentation) • [Screenshots](#screenshots)
+[Features](#features) • [Quick Start](#quick-start) • [Tech Stack](#tech-stack) • [Troubleshooting](#troubleshooting) • [API Documentation](#api-documentation)
 
 </div>
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ installed
+- npm or yarn
+
+### Installation & Running
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd full_ai_recommended_ai_function_55
+
+# Option 1: Use the startup script (Recommended)
+./start.sh
+
+# Option 2: Manual start
+npm install --legacy-peer-deps
+npm run dev     # Frontend (Port 3000)
+npm run server  # Backend (Port 3001) - in another terminal
+```
+
+**Access the application:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:3001
+
+### ⚠️ Troubleshooting "ERR_CONNECTION_REFUSED"
+
+If you see this error, the servers aren't running. Fix it:
+
+```bash
+# Quick fix
+./start.sh
+
+# Or check what's wrong
+curl http://localhost:3000  # Check frontend
+curl http://localhost:3001/health  # Check backend
+
+# View detailed troubleshooting
+cat RUNNING.md
+```
 
 ---
 

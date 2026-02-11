@@ -70,7 +70,21 @@ Visit these URLs in your browser:
 
 ## 🛠️ How to Start/Stop
 
-### Starting the Servers
+### Quick Start (Recommended)
+
+**Use the startup script:**
+```bash
+cd /home/runner/work/full_ai_recommended_ai_function_55/full_ai_recommended_ai_function_55
+./start.sh
+```
+
+This will:
+- Install dependencies if needed
+- Create .env file if missing
+- Start both frontend and backend servers
+- Monitor server health
+
+### Manual Start
 
 **Terminal 1 - Frontend:**
 ```bash
@@ -86,7 +100,13 @@ npm run server
 
 ### Stopping the Servers
 
-Press `Ctrl + C` in each terminal window
+**Quick Stop:**
+```bash
+pkill -f "next dev"
+pkill -f "node backend/server.js"
+```
+
+**Or press `Ctrl + C` in each terminal window**
 
 ---
 
@@ -150,6 +170,23 @@ Already configured with demo credentials:
 
 ## 🔧 Troubleshooting
 
+### "ERR_CONNECTION_REFUSED" Error
+
+This means the servers are not running. Fix it:
+
+```bash
+# Check if servers are running
+curl http://localhost:3000
+curl http://localhost:3001/health
+
+# If not, start them
+./start.sh
+
+# Or manually:
+npm run dev &    # Frontend
+npm run server & # Backend
+```
+
 ### Frontend Won't Start
 ```bash
 # Reinstall dependencies
@@ -163,18 +200,53 @@ npm run dev
 # Check .env file exists
 ls -la .env
 
-# Verify port 3001 is free
-lsof -i :3001
+# If missing, the start.sh script will create it
+./start.sh
+
+# Or manually recreate it from .env.example
+cp .env.example .env
+# Then edit .env with your values
 ```
 
 ### Port Already in Use
 ```bash
-# Kill process on port 3000
-lsof -ti:3000 | xargs kill -9
+# Find processes using ports
+lsof -i :3000
+lsof -i :3001
 
-# Kill process on port 3001
-lsof -ti:3001 | xargs kill -9
+# Kill specific processes
+kill -9 <PID>
+
+# Or kill all Node processes (use with caution)
+pkill -f "next dev"
+pkill -f "node backend/server.js"
 ```
+
+### "Cannot GET /" or Blank Page
+
+This usually means:
+1. **Frontend not fully started** - Wait 10-15 seconds after starting
+2. **Build cache issue** - Run `rm -rf .next` then restart
+3. **Dependencies corrupted** - Run `rm -rf node_modules && npm install --legacy-peer-deps`
+
+### Checking Server Status
+
+```bash
+# Quick check script
+echo "Frontend:" && curl -s http://localhost:3000 > /dev/null && echo "✅ Running" || echo "❌ Stopped"
+echo "Backend:" && curl -s http://localhost:3001/health && echo "✅ Running" || echo "❌ Stopped"
+
+# View logs
+tail -f /tmp/travelgenie-frontend.log
+tail -f /tmp/travelgenie-backend.log
+```
+
+### MongoDB Connection Issues
+
+The app works without MongoDB for development. If you see MongoDB warnings:
+- They're just warnings, not errors
+- The app will still function
+- To fix: Install MongoDB locally or use MongoDB Atlas (see DEPLOYMENT.md)
 
 ---
 
