@@ -60,6 +60,17 @@ router.post('/wishlist', authMiddleware, async (req, res) => {
     const { itemId, type } = req.body;
     
     const user = await User.findById(req.user._id);
+    
+    // Check if item already in wishlist
+    const existingIndex = user.wishlist.indexOf(itemId);
+    if (existingIndex !== -1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Item already in wishlist'
+      });
+    }
+    
+    // Add both itemId and type together to keep them synchronized
     user.wishlist.push(itemId);
     user.wishlistType.push(type);
     await user.save();

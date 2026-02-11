@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useToast } from '@/hooks/use-toast'
 
 export default function ExplorePage() {
+  const { toast } = useToast()
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -21,14 +23,25 @@ export default function ExplorePage() {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           })
-          alert(`Location detected: ${position.coords.latitude}, ${position.coords.longitude}`)
+          toast({
+            title: "Location detected",
+            description: `${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`,
+          })
         },
         (error) => {
-          alert('Unable to detect location. Please enable location services.')
+          toast({
+            title: "Location error",
+            description: "Unable to detect location. Please enable location services.",
+            variant: "destructive"
+          })
         }
       )
     } else {
-      alert('Geolocation is not supported by your browser.')
+      toast({
+        title: "Not supported",
+        description: "Geolocation is not supported by your browser.",
+        variant: "destructive"
+      })
     }
   }
 

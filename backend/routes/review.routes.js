@@ -21,7 +21,9 @@ router.post('/', authMiddleware, async (req, res) => {
       itemId: review.itemId
     });
 
-    const avgRating = reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length;
+    const avgRating = reviews.length > 0 
+      ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length 
+      : 0;
 
     const Model = review.reviewType === 'hotel' ? Hotel : Restaurant;
     await Model.findByIdAndUpdate(review.itemId, {

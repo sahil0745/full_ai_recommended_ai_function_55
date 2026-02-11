@@ -136,7 +136,7 @@ const bookingSchema = new mongoose.Schema({
 bookingSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   if (!this.bookingReference) {
-    this.bookingReference = 'TG' + Date.now() + Math.random().toString(36).substr(2, 9).toUpperCase();
+    this.bookingReference = 'TG' + Date.now() + Math.random().toString(36).slice(2, 11).toUpperCase();
   }
   next();
 });
